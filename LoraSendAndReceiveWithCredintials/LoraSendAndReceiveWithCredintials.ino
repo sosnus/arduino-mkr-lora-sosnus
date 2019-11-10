@@ -13,16 +13,12 @@
 
 LoRaModem modem;
 
-// Uncomment if using the Murata chip as a module
-// LoRaModem modem(Serial1);
-
 #include "arduino_secrets.h"
 // Please enter your sensitive data in the Secret tab or arduino_secrets.h
 String appEui = SECRET_APP_EUI;
 String appKey = SECRET_APP_KEY;
 
 void setup() {
-  // put your setup code here, to run once:
   Serial.begin(115200);
   while (!Serial);
   // change this to your regional band (eg. US915, AS923, ...)
