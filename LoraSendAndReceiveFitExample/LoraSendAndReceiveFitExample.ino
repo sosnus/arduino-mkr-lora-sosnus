@@ -46,23 +46,13 @@ void loop()
   mySerial1.println();
   String msg = String(myCounter++);
 
-  mySerial1.println("Sending msg: <" + msg + ">");
+  mySerial1.println("Send msg: <" + msg + ">");
 
   int err;
   modem.beginPacket();
   modem.print(msg);
-  modem.endPacket(false);
-  /*
-  err = modem.endPacket(true);
-  if (err > 0)
-  {
-    mySerial1.println("[OK] SENT!");
-  }
-  else
-  {
-    mySerial1.println("[ERR] No respond from GW");
-  }
-  */
+  modem.endPacket(false); // falce - without confirmation downlink
+
   digitalWrite(LED_BUILTIN, LOW);
 
   delay(10000);
