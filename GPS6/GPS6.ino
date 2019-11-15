@@ -19,7 +19,7 @@ void setup()
   pinPeripheral(0, PIO_SERCOM); //Assign RX function to pin 0
   pinPeripheral(1, PIO_SERCOM); //Assign TX function to pin 1
   mySerial1.println(">>GPS6<<");
-  mySerial1.println("TODO: dodać GPS z pliku GPS2");
+  mySerial1.println("TODO: dodac GPS z pliku GPS2");
 
   // LORA INIT
   if (!modem.begin(EU868))
