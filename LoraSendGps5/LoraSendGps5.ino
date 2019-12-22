@@ -22,7 +22,8 @@ void setup()
   pinPeripheral(0, PIO_SERCOM); //Assign RX function to pin 0
   pinPeripheral(1, PIO_SERCOM); //Assign TX function to pin 1
   mySerial1.println(">>> GPS 5 <<<");
-
+  mySerial1.println("16:21 22-Dec-19");
+  mySerial1.println("LoraSendGps");
 
   // LORA INIT
     mySerial1.println("[INI] Lora module...");
@@ -35,10 +36,12 @@ void setup()
   // LORA CONNECT
     mySerial1.println("[INI] Lora GW...");
   int connected = modem.joinOTAA(appEui, appKey);
+    mySerial1.println("[INI] Wait for connection...");
   if (!connected)
   {
     mySerial1.println("[ERR] Can't get GW");
-    while (1);
+    mySerial1.println("[WARN] Maybe no respond");
+   // while (1);
   }
 
   mySerial1.println("SETUP END");

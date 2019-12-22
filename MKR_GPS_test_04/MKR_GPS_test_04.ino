@@ -29,8 +29,8 @@ void setup() {
 
   mySerial1.begin(9600);
   mySerial1.println("INF: Serial init done");
-  mySerial1.println("07:39 22-Dec-19");
-  mySerial1.println("MKR_GPS_test_02");
+  mySerial1.println("16:36 22-Dec-19");
+  mySerial1.println("MKR_GPS_test_03");
 
 
   // lora_init();  // #####
@@ -49,7 +49,7 @@ void setup() {
   int connected = modem.joinOTAA(appEui, appKey);
   if (!connected)
   {
-    mySerial1.println("Something went wrong; are you indoor? Move near a window and retry");
+    mySerial1.println("[ERR] !connected"); //Something went wrong; are you indoor? Move near a window and retry");
     mySerial1.println("[WARN] Maybe no respond");
   //  errorBlink(250);
   }
@@ -58,20 +58,7 @@ void setup() {
 delay(100);
   mySerial1.println("OTAA Connected!");
     mySerial1.println("INF: LoRa init done");
-    //send test LoRa Msg ########
-    mySerial1.println("LoRaTEST send on modem...");
-      int err;
-  modem.beginPacket();
-  modem.print("LoRaTEST");
-  err = modem.endPacket(true);
-  if (err > 0) {
-    Serial.println("Message sent correctly!");
-  } else {
-    Serial.println("Error sending message :(");
-    Serial.println("(you may send a limited amount of messages per minute, depending on the signal strength");
-    Serial.println("it may vary from 1 message every couple of seconds to 1 message every minute)");
-  }
-  // end ######################
+    
 delay(100);
 
 
@@ -98,6 +85,22 @@ void loop() {
   mySerial1.println("wakeup");
   GPS.wakeup();
 
+//send test LoRa Msg ########
+    mySerial1.println("LoRaTEST send on modem...");
+      int err;
+  modem.beginPacket();
+  modem.print("LoRaTEST");
+  err = modem.endPacket(true);
+  if (err > 0) {
+    mySerial1.println("Message sent correctly!");
+  } else {
+    mySerial1.println("Error sending message :(");
+    mySerial1.println("(you may send a limited amount of messages per minute, depending on the signal strength");
+    mySerial1.println("it may vary from 1 message every couple of seconds to 1 message every minute)");
+  }
+  // end ######################
+
+  
   mySerial1.println("wait location ... ");
 
   // wait for new GPS data to become available
@@ -129,6 +132,7 @@ void loop() {
   mySerial1.println(satellites);
 
   mySerial1.println();
+  delay(10000);
 }
 
 
