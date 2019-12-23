@@ -25,14 +25,14 @@ void errorBlink(int blink_delay)
 
 int tempValue = 111;
 //send test LoRa Msg ########
-void sendLoraMsg(String msg, bool conformed)
+void sendLoraMsg(String msg, bool confirmed)
 {
-    mySerial1.println("LoRaTEST send on modem...");
-      int err;
+  mySerial1.println("LoRaTEST send on modem...");
+  int err;
   modem.beginPacket();
   modem.print(msg);
   modem.print(tempValue);
-  err = modem.endPacket(conformed);
+  err = modem.endPacket(confirmed);
   if (err > 0) {
     mySerial1.println("Message sent correctly!");
   } else {
@@ -41,7 +41,7 @@ void sendLoraMsg(String msg, bool conformed)
     mySerial1.println("it may vary from 1 message every couple of seconds to 1 message every minute)");
   }
 }
-  // end ######################
+// end ######################
 
 void setup() {
   // serialport_init();  // #####
@@ -50,9 +50,8 @@ void setup() {
 
   mySerial1.begin(9600);
   mySerial1.println("INF: Serial init done");
-  mySerial1.println("17:16 22-Dec-19");
+  mySerial1.println("08:16 23-Dec-19");
   mySerial1.println("MKR_GPS_test_03");
-  delay(1000);
 
 
   // lora_init();  // #####
@@ -73,43 +72,31 @@ void setup() {
   {
     mySerial1.println("[ERR] !connected"); //Something went wrong; are you indoor? Move near a window and retry");
     mySerial1.println("[WARN] Maybe no respond");
-  //  errorBlink(250);
+    //  errorBlink(250);
   }
 
   //modem.minPollInterval(60);
-delay(100);
+  delay(100);
   mySerial1.println("OTAA Connected!");
-    mySerial1.println("INF: LoRa init done");
-    
-delay(100);
+  mySerial1.println("INF: LoRa init done");
+
+  delay(100);
 
 
   if (!GPS.begin(GPS_MODE_SHIELD)) {
     mySerial1.println("Failed to initialize GPS!");
-  //  while (1);
+    errorBlink(250);
   }
 }
 
 void loop() {
-  // put the GPS in standby mode
-  mySerial1.println("standby");
-  GPS.standby();
-  /*
-    // wait for 10 seconds
-    mySerial1.print("delay ");
-    for (int i = 0; i < 10; i++) {
-      delay(1000);
-      mySerial1.print(".");
-    }
-    mySerial1.println();
-  */
   // wake up the GPS
   mySerial1.println("wakeup");
   GPS.wakeup();
 
-sendLoraMsg("Test123", false);
+  sendLoraMsg("GPS-proj-test", false);
 
-  
+
   mySerial1.println("wait location ... ");
 
   // wait for new GPS data to become available
@@ -125,8 +112,6 @@ sendLoraMsg("Test123", false);
   float longitude  = GPS.longitude();
   float altitude   = GPS.altitude();
   int   satellites = GPS.satellites();
-
-
 
   tempValue   = GPS.altitude();
 
@@ -145,6 +130,11 @@ sendLoraMsg("Test123", false);
   mySerial1.println(satellites);
 
   mySerial1.println();
+  
+  // put the GPS in standby mode
+  mySerial1.println("standby");
+  GPS.standby();
+
   delay(15000);
 }
 
